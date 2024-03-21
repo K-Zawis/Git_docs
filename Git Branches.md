@@ -51,9 +51,9 @@ git push origin <branch_name>
 Note `git add .` moves *all* changed, added or deleted files to staging for the next commit. You can specify which files you may want to include in the commit by specifying flags and specific files:
 ```git
 git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p] 
-	[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse] 
-	[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize] [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]] 
-	[--] [<pathspec>…​]
+		[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse] 
+		[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize] [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]] 
+		[--] [<pathspec>…​]
 ```
 
 If unwanted files were added to the staging area, they can be unstaged (removed) by using:
@@ -140,3 +140,19 @@ Note, if you've previously pushed your branch to the remote repository and then 
 git push -f origin <branch_name>
 ```
 But be careful with a force push: If someone else made changes in between on this branch, a force push will forcefully overwrite all these changes.
+
+## How to get a feature branch ready for merge?
+A pull request will merge all your feature branch's changes into the staging branch. After which you may delete the feature branch both locally and remotely. It is not necessary to pull request to merge, but it is good practice as it enables other people to review your feature on platforms like Github or Gitlab. 
+
+1. follow [[Git Branches#How to keep a feature branch up-to-date with staging?|How to keep a feature branch up-to-date with staging?]] 
+2. Open a pull request for your feature branch
+3. Wait for approval of team members
+4. Optionally push more commits to your remote branch if changes are necessary after discussion
+
+Then we may merge our pull request directly on the chosen platform (e.g. Github or Gitlab), or continue on the command line:
+```git
+git checkout staging
+git merge --no-ff <branch_name>
+git push origin staging
+```
+
