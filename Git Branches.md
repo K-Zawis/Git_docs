@@ -9,7 +9,6 @@ There is generally only one master and staging branch, while multiple feature br
 
 Sometimes they use ticket IDs to easily link a feature to a ticket.
 ## Where am I?
-
 To check where you currently are, you can use the following commands:
 ```git
 git branch
@@ -21,7 +20,6 @@ git log
 `git reflog` may be used to see where you were before a certain git command that visually "removes" commits like accidentally resetting to an older commit or rebase-ing wrongly. Such that you can `git reset --hard` back to that ref to restore your previous state. Note, refs imply not just the commit but the entire history behind it.
 
 ## Branch Life-cycles
-
 The Master and the Staging branches are only created once and stay as long as the project exists. Unlike feature branches which are only created for the period of time the feature is being developed. They get merged into the staging branch and finally the staging branch gets merged into the master branch for a new release of your application. 
 
 The two essential commands to create a new branch or to check out an available branch:
@@ -89,7 +87,6 @@ Using this naming convention would look something like this:
 - style(\*) fix indentation
 - chore(.gitignore) add .env file
 ## How to keep a branch up-to-date?
-
 Before you start to update the branch, follow these optional steps:
 - If the branch isn't available locally for you:
   1. `git fetch`
@@ -114,3 +111,32 @@ git rebase --abort
 ```
 
 After the pull rebase finishes, all your commits should be listed on top of the remote branch's commits. If there were stashed changes before the rebase took place, they can be applied with `git stach apply`. Your branch should be up to date with the remote branch's changes and your own changes on top.
+## How to keep a feature branch up-to-date with staging?
+When other feature branches are merged into staging, we may want to keep your feature branch up-to-date. When should we do this?
+- If we want to create a pull request of your feature branch to merge into staging, but all the recent changes from staging should also be included to reflect the latest changes but also to not run into merge conflicts.
+- If we need to include an update from staging (e.g. hotfix, library update, dependent feature from someone else) to continue working on your feature branch without blocking issues.
+
+We first must check out the feature branch
+```git
+git checkout <branch_name>
+```
+and follow the process in [[Git Branches#How to keep a branch up-to-date?|How to keep a branch up-to-date]]. 
+
+Next we do the same for staging
+```git
+git checkout staging
+```
+and follow the process in [[Git Branches#How to keep a branch up-to-date?|How to keep a branch up-to-date]]. 
+
+Followed by checking out your feature branch, rebase $\textemdash$ which will merge all your changes from the feature branch on top of the staging branch $\textemdash$ and push
+```git
+git checkout <branch_name>
+git rebase staging
+git push origin <branch_name>
+```
+
+Note, if you've previously pushed your branch to the remote repository and then rebased it with the staging branch locally, you'll need to force-push your changes. This is because when you rebase onto another branch, it alters the commit history of your branch, and thus when you try to push, git will reject it as it involves rewriting history, which in turn alters the commit structure. 
+```git
+git push -f origin <branch_name>
+```
+But be careful with a force push: If someone else made changes in between on this branch, a force push will forcefully overwrite all these changes.
