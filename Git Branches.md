@@ -7,7 +7,7 @@ There is generally only one master and staging branch, while multiple feature br
 - feat/user-authentication
 - fix/landing-page-transition
 
-Sometimes they use ticket IDs to easily link a feature to a ticket.
+Sometimes ticket IDs are used to easily link a feature to a ticket.
 ## Where am I?
 To check where you currently are, you can use the following commands:
 ```git
@@ -17,7 +17,7 @@ git log
 ```
 `git status` shows your changed files in staged and unstaged mode $\textemdash$ get familiar with these terms $\textemdash$ while `git log` shows you the git history. 
 
-`git reflog` may be used to see where you were before a certain git command that visually "removes" commits like accidentally resetting to an older commit or rebase-ing wrongly. Such that you can `git reset --hard` back to that ref to restore your previous state. Note, refs imply not just the commit but the entire history behind it.
+`git reflog` may be used to see where you were before a certain git command that visually "removes" commits, like accidentally resetting to an older commit or rebase-ing wrongly. Then you can `git reset --hard` back to that ref to restore your previous state. Note, refs imply not just the commit but the entire history behind it.
 
 ## Branch Life-cycles
 The Master and the Staging branches are only created once and stay as long as the project exists. Unlike feature branches which are only created for the period of time the feature is being developed. They get merged into the staging branch and finally the staging branch gets merged into the master branch for a new release of your application. 
@@ -155,4 +155,16 @@ git checkout staging
 git merge --no-ff <branch_name>
 git push origin staging
 ```
+This process repeats for each feature branch. In case something goes wrong during the git workflow, it's worth checking out [this tutorial to revert almost anything with git.](https://github.blog/2015-06-08-how-to-undo-almost-anything-with-git/) 
 
+## Keeping your git history tidy
+By using rebasse, your changes will be applied on top of the changes of other team members changes. This means your history remains linear. However, to keep your *feature branches* tidy.
+
+The following allow you to undo commits but want to keep this in history for documentation, reorder, rename, or squash commits into each other, if you want to append changes to your last commit and how to change the commit message of your last commit:
+```git
+git revert <commit_sha>
+git rebase -i HEAD~<number_of_commits>
+git commit --amend
+git commit --amend -m "<commit_message>"
+```
+some of these commits will change your local commit history. If these have been pushed to the remote repository before, you will have to force push these changes. Just be mindful to not override a team members changes with force push. 
