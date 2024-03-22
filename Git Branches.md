@@ -15,9 +15,9 @@ git branch
 git status
 git log
 ```
-`git status` shows your changed files in staged and unstaged mode $\textemdash$ get familiar with these terms $\textemdash$ while `git log` shows you the git history. 
+`{git icon} git status` shows your changed files in staged and unstaged mode $\textemdash$ get familiar with these terms $\textemdash$ while `{git icon} git log` shows you the git history. 
 
-`git reflog` may be used to see where you were before a certain git command that visually "removes" commits, like accidentally resetting to an older commit or rebase-ing wrongly. Then you can `git reset --hard` back to that ref to restore your previous state. Note, refs imply not just the commit but the entire history behind it.
+`{git icon} git reflog` may be used to see where you were before a certain git command that visually "removes" commits, like accidentally resetting to an older commit or rebase-ing wrongly. Then you can `{git icon} git reset --hard` back to that ref to restore your previous state. Note, refs imply not just the commit but the entire history behind it.
 
 ## Branch Life-cycles
 The Master and the Staging branches are only created once and stay as long as the project exists. Unlike feature branches which are only created for the period of time the feature is being developed. They get merged into the staging branch and finally the staging branch gets merged into the master branch for a new release of your application. 
@@ -42,13 +42,13 @@ git push origin -d <branch_name>
 ```
 Usually you would want to merge the branch into staging before deletion so make sure this is done before you delete locally and remotely.
 ## Feature Branch
-First, you should check out your new feature branch with `git checkout -b <branch_name>`. Then to make commits follow the following pattern to make your changes available to everyone in the remote repository:
+First, you should check out your new feature branch with `{git icon} git checkout -b <branch_name>`. Then to make commits follow the following pattern to make your changes available to everyone in the remote repository:
 ```git
 git add .
 git commit -m "<commit_message>"
 git push origin <branch_name>
 ```
-Note `git add .` moves *all* changed, added or deleted files to staging for the next commit. You can specify which files you may want to include in the commit by specifying flags and specific files:
+Note `{git icon} git add .` moves *all* changed, added or deleted files to staging for the next commit. You can specify which files you may want to include in the commit by specifying flags and specific files:
 ```git
 git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p] 
 		[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse] 
@@ -89,11 +89,11 @@ Using this naming convention would look something like this:
 ## How to keep a branch up-to-date?
 Before you start to update the branch, follow these optional steps:
 - If the branch isn't available locally for you:
-  1. `git fetch`
-  2. `git checkout <branch_name>`
+  1. `{git icon} git fetch`
+  2. `{git icon} git checkout <branch_name>`
 - If you have changed files:
-  1. `git commit`
-  2. or `git stash`, which is used to save un-committed changes and remove them from the working tree.
+  1. `{git icon} git commit`
+  2. or `{git icon} git stash`, which is used to save un-committed changes and remove them from the working tree.
 
 
 Now we can start pulling latest changes. Here we will be using a rebase which  will result in a linear and cleaner project history:
@@ -110,7 +110,7 @@ In case we encounter multiple conflicts by following the steps above until these
 git rebase --abort
 ```
 
-After the pull rebase finishes, all your commits should be listed on top of the remote branch's commits. If there were stashed changes before the rebase took place, they can be applied with `git stach apply`. Your branch should be up to date with the remote branch's changes and your own changes on top.
+After the pull rebase finishes, all your commits should be listed on top of the remote branch's commits. If there were stashed changes before the rebase took place, they can be applied with `{git icon} git stach apply`. Your branch should be up to date with the remote branch's changes and your own changes on top.
 ## How to keep a feature branch up-to-date with staging?
 When other feature branches are merged into staging, we may want to keep your feature branch up-to-date. When should we do this?
 - If we want to create a pull request of your feature branch to merge into staging, but all the recent changes from staging should also be included to reflect the latest changes but also to not run into merge conflicts.
